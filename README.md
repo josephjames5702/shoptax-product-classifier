@@ -14,7 +14,7 @@
 [![Ollama](https://img.shields.io/badge/Ollama-Llama_3.2_3B-black?style=for-the-badge&logo=ollama&logoColor=white)](https://ollama.ai)
 
 <p align="center">
-  <b>A high-throughput, enterprise-ready classification engine that ingests raw vendor feeds and maps them to the official Shopify Standard Product Taxonomy (542+ categories) with sub-second vector search, offline LLM attribute extraction, and a Human-in-the-Loop review queue.</b>
+  <b>An enterprise-grade e-commerce catalog classification engine that ingests raw vendor feeds and maps them to the official Shopify Standard Product Taxonomy (542+ categories) with sub-second vector search, offline LLM attribute extraction, and a Human-in-the-Loop review queue.</b>
 </p>
 
 ---
@@ -37,44 +37,55 @@
 
 ---
 
-## 📸 Visual Walkthrough & Product Screenshots
+## 📸 Platform Showcase & User Journey Screenshots
 
-### 1. Executive SaaS KPI Dashboard (`/admin`)
-> Real-time monitoring showing total catalogues, total items processed, auto-approved rate (80%+ threshold), active items in the human review queue, and a category distribution chart.
+### 1. Ingestion Lifecycle: From Uploading to Completed Classification
+> Real-time asynchronous processing tracks catalog feeds through their complete lifecycle. The system streams the file in chunks, executes the 3-stage AI funnel, and updates the catalog status from `PROCESSING` to `COMPLETED` with full audit trails.
+
+| Live Ingestion & Processing (`PROCESSING`) | Final Verified Catalog (`COMPLETED`) |
+|:---:|:---:|
+| ![Processing State](docs/screenshots/seller_portal_catalogues_processing.png) | ![Completed State](docs/screenshots/seller_portal_my_catalogues_completed.png) |
+
+---
+
+### 2. Multi-Catalogue Management (`/app`)
+> Sellers can import multiple product catalogs simultaneously (CSV/XLSX), view live record counts, explore classifications, or remove outdated catalogs with in-app confirmation modals.
+
+![Multiple Catalogues Management](docs/screenshots/seller_portal_multiple_catalogues.png)
+
+---
+
+### 3. Dual-Portal Authentication Experience
+> Dedicated, branded login experiences for merchants and administrators:
+
+| Seller Portal Login (Glassmorphism & Lifestyle) | Admin Portal Login (Polaris Clean SaaS) |
+|:---:|:---:|
+| ![Seller Glassmorphism Login](docs/screenshots/seller_portal_glassmorphism_login.png) | ![Admin SaaS Login](docs/screenshots/admin_portal_login_gradient.png) |
+
+---
+
+### 4. Executive SaaS KPI Dashboard (`/admin`)
+> Real-time executive monitoring showing total catalogues, total products, auto-approved rate (80%+ threshold), active items in the human review queue, and a category distribution breakdown chart.
 
 ![Admin KPI Dashboard](docs/screenshots/4_admin_kpi_dashboard.png)
 
 ---
 
-### 2. Human-in-the-Loop (HITL) Review Queue (`/admin?tab=review`)
+### 5. Human-in-the-Loop (HITL) Review Queue (`/admin?tab=review`)
 > Triage console for ambiguous products (confidence < 80%). Displays top-4 ranked candidate categories with individual confidence percentages and 1-click supervisor approvals or overrides.
 
 ![Human-in-the-Loop Review Queue](docs/screenshots/5_admin_review_queue_hitl.png)
 
 ---
 
-### 3. Seller Catalog Ingestion Portal (`/app`)
-> Self-service catalog management portal for merchants. Allows CSV/Excel drag-and-drop upload, automatic header mapping, real-time ingestion progress, and paginated product feeds.
-
-![Seller Catalog Portal](docs/screenshots/1_seller_catalog_portal.png)
-
----
-
-### 4. Taxonomy Breadcrumb & Attribute Inspector
-> Detailed product view showing the full hierarchical path in the official Shopify taxonomy (`Furniture > Chairs > Kitchen & Dining Room Chairs`), multi-signal confidence score, and extracted normalized attributes (Color, Material, Pattern).
+### 6. Taxonomy Breadcrumb & Attribute Inspector
+> Deep product inspection view showing the full hierarchical path in the official Shopify taxonomy (`Furniture > Chairs > Kitchen & Dining Room Chairs`), multi-signal confidence score, and extracted normalized attributes (Color, Material, Pattern).
 
 ![Product Classification Detail](docs/screenshots/2_product_classification_detail.png)
 
 ---
 
-### 5. SaaS Admin Portal Login Screen (`/admin/login`)
-> Split-screen enterprise authentication card featuring live category hierarchy breadcrumbs, floating 3D design accents, and role-based access control.
-
-![Admin Login Portal](docs/screenshots/3_admin_login_portal.png)
-
----
-
-### 6. System Diagnostics & Safe Maintenance (`/admin?tab=settings`)
+### 7. System Diagnostics & Safe Maintenance (`/admin?tab=settings`)
 > System health checks, taxonomy data integrity tools, and safe catalog reset functionality that deletes user catalog test data while strictly preserving core Shopify taxonomy records.
 
 ![System Diagnostics & Settings](docs/screenshots/6_system_settings_diagnostics.png)
@@ -266,9 +277,9 @@ python manage.py runserver 127.0.0.1:8000
 ```bash
 cd backend
 # Windows
-celery -A core worker --loglevel=info --pool=threads --concurrency=16
+celery -A config worker --loglevel=info --pool=threads --concurrency=16
 # Linux/macOS
-celery -A core worker --loglevel=info --concurrency=16
+celery -A config worker --loglevel=info --concurrency=16
 ```
 
 ### 4. Frontend Setup (React 18 + Vite)
@@ -316,17 +327,17 @@ ollama run llama3.2:3b
 
 ## 🚢 Git Push Instructions
 
-To sync your local repository with GitHub:
+To sync your local changes to GitHub:
 
 ```bash
 # Add all files
 git add .
 
 # Commit with descriptive message
-git commit -m "feat: complete ShopTax product classifier with architecture, media suite, and evaluation answers"
+git commit -m "docs: add real user screenshots, ingestion lifecycle states, and updated UI badges"
 
 # Push to main branch
-git push -u origin main
+git push origin main
 ```
 
 ---
