@@ -27,21 +27,40 @@
 
 ## 📸 Platform Showcase & Real Application Screenshots
 
-### 1. Admin Overview Dashboard & Infrastructure Audit Feed
+### 1. Ingestion Lifecycle: Uploading, Batch Processing, and Completion
+> The complete lifecycle of an uploaded catalogue feed. Merchants select a CSV or Excel file via the drag-and-drop modal. The system parses rows in streaming chunks, shows real-time progress during `PROCESSING`, and finalizes with verified `COMPLETED` classifications.
+
+| Step 1: Upload Modal | Step 2: Live Processing (`PROCESSING`) | Step 3: Verified Catalog (`COMPLETED`) |
+|:---:|:---:|:---:|
+| <img src="docs/screenshots/upload_catalogue_modal_dialog.png" width="280" alt="Upload Modal"/> | <img src="docs/screenshots/seller_portal_catalogues_processing.png" width="360" alt="Processing State"/> | <img src="docs/screenshots/seller_portal_my_catalogues_completed.png" width="360" alt="Completed State"/> |
+
+---
+
+### 2. Classification Analytics & Global Performance Insights (`/admin?tab=analytics`)
+> Global telemetry tracking classification precision, confidence distribution, and review queue throughput:
+> * **94.2% AI Classification Accuracy** across all mapped categories.
+> * **Confidence Score Distribution:** 65% High Confidence (>70%), 28% Medium Confidence (40–70%), 7% Low Confidence (<40%).
+> * **Review Decision Status:** Real-time breakdown of Approved (20 admin verified), Needs Review (40 action pending), Declined (10 rejected), and Auto Matched (50 high certainty).
+
+![Classification Analytics and Insights](docs/screenshots/admin_classification_analytics_insights.png)
+
+---
+
+### 3. Admin Overview Dashboard & Infrastructure Audit Feed (`/admin`)
 > Executive operations console featuring platform performance metrics (Total Products & Users: 100, Active Sessions: 57, Classified Catalogues: $45,210, Pending Reviews: 28), recent imported products with SKU/date tracking, and live infrastructure audit logs (AI Taxonomy Engine: Ollama Llama 3.2 online, System Backup completed).
 
 ![Admin Overview Dashboard](docs/screenshots/admin_overview_dashboard_audit.png)
 
 ---
 
-### 2. Admin Product Supervisor & Taxonomy Alignment Table
+### 4. Admin Product Supervisor & Taxonomy Alignment Table
 > Detailed audit grid for supervisors to verify taxonomy breadcrumb paths, inspect individual prediction confidence percentages, and execute 1-click `Approve` or `Decline` decisions across all ingested product feeds.
 
 ![Admin Product Supervisor Table](docs/screenshots/admin_product_supervisor_table.png)
 
 ---
 
-### 3. Seller Products Explorer: Visual Cards & Status Filtering
+### 5. Seller Products Explorer: Visual Cards & Status Filtering (`/app`)
 > Sellers can explore their categorized catalog items through a responsive visual card grid. Each card displays the product thumbnail, SKU, predicted Shopify category, confidence score, and decision badge (`NEEDS REVIEW` or `DECLINED`).
 
 ![Seller Products Explorer Grid](docs/screenshots/seller_products_explorer_grid.png)
@@ -55,23 +74,24 @@
 
 ---
 
-### 4. Ingestion Lifecycle: From Uploading to Completed Classification
-> Asynchronous processing tracks catalog feeds through their complete lifecycle. The system streams the file in chunks, executes the 3-stage AI funnel, and updates the catalog status from `PROCESSING` to `COMPLETED` with full database checkpoints.
+### 6. AI Engine Configuration & Threshold Management (`/admin?tab=settings`)
+> Real-time settings allowing administrators to manage AI classification engine parameters without restarting the application:
+> * **Classification Model Provider:** Local Offline Ollama (Llama 3.2 3B) with verified endpoint connection.
+> * **Auto-Approval Threshold Slider:** Configurable cutoff (default 80%) for promoting high-confidence predictions directly into inventory.
+> * **Batch Processing Size:** Tunable worker queue chunk sizes (default 50 items per Celery task).
 
-| Live Ingestion & Processing (`PROCESSING`) | Final Verified Catalog (`COMPLETED`) |
-|:---:|:---:|
-| ![Processing State](docs/screenshots/seller_portal_catalogues_processing.png) | ![Completed State](docs/screenshots/seller_portal_my_catalogues_completed.png) |
+![AI Classification Engine Settings](docs/screenshots/admin_system_settings_engine.png)
 
 ---
 
-### 5. Multi-Catalogue Management (`/app`)
+### 7. Multi-Catalogue Management (`/app`)
 > Sellers can import multiple product catalogs simultaneously (CSV/XLSX), view live record counts, explore classifications, or remove outdated catalogs with in-app confirmation modals.
 
 ![Multiple Catalogues Management](docs/screenshots/seller_portal_multiple_catalogues.png)
 
 ---
 
-### 6. Dual-Portal Authentication Experience
+### 8. Dual-Portal Authentication Experience
 > Dedicated, branded login experiences for merchants and administrators:
 
 | Seller Portal Login (Glassmorphism & Lifestyle) | Admin Portal Login (Polaris Clean SaaS) |
@@ -80,24 +100,17 @@
 
 ---
 
-### 7. Human-in-the-Loop (HITL) Review Queue (`/admin?tab=review`)
+### 9. Human-in-the-Loop (HITL) Review Queue (`/admin?tab=review`)
 > Triage console for ambiguous products (confidence < 80%). Displays top-4 ranked candidate categories with individual confidence percentages and 1-click supervisor approvals or overrides.
 
 ![Human-in-the-Loop Review Queue](docs/screenshots/5_admin_review_queue_hitl.png)
 
 ---
 
-### 8. Taxonomy Breadcrumb & Attribute Inspector
+### 10. Taxonomy Breadcrumb & Attribute Inspector
 > Deep product inspection view showing the full hierarchical path in the official Shopify taxonomy (`Furniture > Chairs > Kitchen & Dining Room Chairs`), multi-signal confidence score, and extracted normalized attributes (Color, Material, Pattern).
 
 ![Product Classification Detail](docs/screenshots/2_product_classification_detail.png)
-
----
-
-### 9. System Diagnostics & Safe Maintenance (`/admin?tab=settings`)
-> System health checks, taxonomy data integrity tools, and safe catalog reset functionality that deletes user catalog test data while strictly preserving core Shopify taxonomy records.
-
-![System Diagnostics & Settings](docs/screenshots/6_system_settings_diagnostics.png)
 
 ---
 
