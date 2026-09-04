@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShopTax — Interactive Demo Walkthrough & Media Assets</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0284c7;
+      --primary-dark: #0369a1;
+      --slate-900: #0f172a;
+      --slate-800: #1e293b;
+      --slate-700: #334155;
+      --slate-600: #475569;
+      --slate-200: #e2e8f0;
+      --slate-100: #f1f5f9;
+      --slate-50: #f8fafc;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--slate-700);
+      background: var(--slate-50);
+      line-height: 1.6;
+      padding-bottom: 80px;
+    }
+    .header {
+      background: white;
+      border-bottom: 1px solid var(--slate-200);
+      padding: 16px 24px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(8px);
+    }
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .logo {
+      font-weight: 800;
+      font-size: 1.25rem;
+      color: var(--slate-900);
+      letter-spacing: -0.5px;
+    }
+    .badge {
+      background: #e0f2fe;
+      color: #0369a1;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 999px;
+    }
+    .btn-group {
+      display: flex;
+      gap: 12px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 18px;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.15s ease;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-secondary {
+      background: white;
+      border-color: var(--slate-200);
+      color: var(--slate-700);
+    }
+    .btn-secondary:hover { background: var(--slate-100); }
+
+    .main {
+      max-width: 1200px;
+      margin: 36px auto 0;
+      padding: 0 24px;
+    }
+    .hero {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .hero h1 {
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: var(--slate-900);
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+    }
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--slate-600);
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .video-card {
+      background: white;
+      border: 1px solid var(--slate-200);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      margin-bottom: 50px;
+    }
+    .video-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .video-header h2 {
+      font-size: 1.25rem;
+      color: var(--slate-900);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .video-container {
+      background: #0f172a;
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    }
+    .video-container img {
+      width: 100%;
+      height: auto;
+      display: block;
+      max-height: 720px;
+      object-fit: contain;
+    }
+
+    .section-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--slate-900);
+      margin-bottom: 8px;
+    }
+    .section-desc {
+      color: var(--slate-600);
+      margin-bottom: 24px;
+      font-size: 0.95rem;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 24px;
+      margin-bottom: 50px;
+    }
+    .shot-card {
+      background: white;
+      border: 1px solid var(--slate-200);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .shot-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+    }
+    .shot-img-wrap {
+      background: #0f172a;
+      border-bottom: 1px solid var(--slate-200);
+      position: relative;
+    }
+    .shot-img-wrap img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+      cursor: pointer;
+    }
+    .shot-content {
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      justify-content: space-between;
+    }
+    .shot-title {
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--slate-900);
+      margin-bottom: 6px;
+    }
+    .shot-desc {
+      font-size: 0.85rem;
+      color: var(--slate-600);
+      margin-bottom: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo-group">
+        <span class="logo">ShopTax</span>
+        <span class="badge">Walkthrough & Media</span>
+      </div>
+      <div class="btn-group">
+        <a href="/evaluation.html" class="btn btn-secondary">
+          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          Technical Answers (15 Qs)
+        </a>
+        <a href="/ShopTax_Product_Taxonomy_Technical_Evaluation.pdf" download="ShopTax_Product_Taxonomy_Technical_Evaluation.pdf" class="btn btn-secondary">
+          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+          Evaluation PDF
+        </a>
+        <a href="/shoptax_demo_walkthrough.webp" download="shoptax_demo_walkthrough.webp" class="btn btn-primary">
+          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+          Download Walkthrough Video
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="hero">
+      <h1>Complete Platform Walkthrough & Media Suite</h1>
+      <p>Demonstrating automated Shopify taxonomy classification, multi-signal AI confidence scoring, and the human-in-the-loop review queue across both Seller and Admin portals.</p>
+    </div>
+
+    <!-- Video Showcase Card -->
+    <div class="video-card">
+      <div class="video-header">
+        <div>
+          <h2>
+            <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            Full Product Walkthrough Recording (Admin & Seller Portals)
+          </h2>
+          <p style="font-size: 0.875rem; color: var(--slate-600); margin-top: 4px;">Recorded live at 1920&times;924 HD resolution (1,327 frames, 15.28 MB)</p>
+        </div>
+        <a href="/shoptax_demo_walkthrough.webp" download="shoptax_demo_walkthrough.webp" class="btn btn-primary">
+          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+          Download Video (15.28 MB)
+        </a>
+      </div>
+      <div class="video-container">
+        <img src="/shoptax_demo_walkthrough.webp" alt="ShopTax Platform Full Walkthrough">
+      </div>
+    </div>
+
+    <!-- LinkedIn Ready Screenshots Section -->
+    <h2 class="section-title">High-Resolution Screenshots for LinkedIn</h2>
+    <p class="section-desc">Crystal-clear 1080p full-frame captures showcasing key system features, ready to attach to your LinkedIn post or portfolio.</p>
+
+    <div class="gallery-grid">
+
+      <!-- 1. Admin KPI Dashboard -->
+      <div class="shot-card">
+        <div class="shot-img-wrap">
+          <a href="/screenshots/4_admin_kpi_dashboard.png" target="_blank">
+            <img src="/screenshots/4_admin_kpi_dashboard.png" alt="Admin SaaS Executive Dashboard">
+          </a>
+        </div>
+        <div class="shot-content">
+          <div>
+            <div class="shot-title">1. Executive SaaS KPI Dashboard</div>
+            <div class="shot-desc">Live metrics tracking total catalogs, total products, auto-approved rate (80%+ threshold), items in review, and category breakdown charts.</div>
+          </div>
+          <a href="/screenshots/4_admin_kpi_dashboard.png" download="1_admin_kpi_dashboard.png" class="btn btn-secondary" style="width: 100%; justify-content: center;">
+            Download Screenshot
+          </a>
+        </div>
+      </div>
+
+      <!-- 2. Admin Review Queue HITL -->
+      <div class="shot-card">
+        <div class="shot-img-wrap">
+          <a href="/screenshots/5_admin_review_queue_hitl.png" target="_blank">
+            <img src="/screenshots/5_admin_review_queue_hitl.png" alt="Human-in-the-Loop Review Queue">
+          </a>
+        </div>
+        <div class="shot-content">
+          <div>
+            <div class="shot-title">2. Human-in-the-Loop (HITL) Review Queue</div>
+            <div class="shot-desc">Smart triage interface highlighting ambiguous products with 1-click approval of ranked candidate categories or category search.</div>
+          </div>
+          <a href="/screenshots/5_admin_review_queue_hitl.png" download="2_admin_review_queue_hitl.png" class="btn btn-secondary" style="width: 100%; justify-content: center;">
+            Download Screenshot
+          </a>
+        </div>
+      </div>
+
+      <!-- 3. Seller Portal -->
+      <div class="shot-card">
+        <div class="shot-img-wrap">
+          <a href="/screenshots/1_seller_catalog_portal.png" target="_blank">
+            <img src="/screenshots/1_seller_catalog_portal.png" alt="Seller Catalog Portal">
+          </a>
+        </div>
+        <div class="shot-content">
+          <div>
+            <div class="shot-title">3. Seller Ingestion & Catalog Dashboard</div>
+            <div class="shot-desc">Seamless CSV/Excel catalog file upload, real-time batch status tracking, and product list overview with category tags.</div>
+          </div>
+          <a href="/screenshots/1_seller_catalog_portal.png" download="3_seller_catalog_portal.png" class="btn btn-secondary" style="width: 100%; justify-content: center;">
+            Download Screenshot
+          </a>
+        </div>
+      </div>
+
+      <!-- 4. Product Classification Detail -->
+      <div class="shot-card">
+        <div class="shot-img-wrap">
+          <a href="/screenshots/2_product_classification_detail.png" target="_blank">
+            <img src="/screenshots/2_product_classification_detail.png" alt="Product Classification Detail">
+          </a>
+        </div>
+        <div class="shot-content">
+          <div>
+            <div class="shot-title">4. Taxonomy Breadcrumb & Attribute Inspector</div>
+            <div class="shot-desc">Deep-dive product view displaying official Shopify taxonomy hierarchy, multi-signal confidence score, and extracted attributes.</div>
+          </div>
+          <a href="/screenshots/2_product_classification_detail.png" download="4_product_classification_detail.png" class="btn btn-secondary" style="width: 100%; justify-content: center;">
+            Download Screenshot
+          </a>
+        </div>
+      </div>
+
+      <!-- 5. Admin Login Portal -->
+      <div class="shot-card">
+        <div class="shot-img-wrap">
+          <a href="/screenshots/3_admin_login_portal.png" target="_blank">
+            <img src="/screenshots/3_admin_login_portal.png" alt="Admin SaaS Login Portal">
+          </a>
+        </div>
+        <div class="shot-content">
+          <div>
+            <div class="shot-title">5. SaaS Admin Portal Login</div>
+            <div class="shot-desc">Split-screen enterprise login card featuring product hierarchy preview, floating 3D taxonomy elements, and role-based authentication.</div>
+          </div>
+          <a href="/screenshots/3_admin_login_portal.png" download="5_admin_login_portal.png" class="btn btn-secondary" style="width: 100%; justify-content: center;">
+            Download Screenshot
+          </a>
+        </div>
+      </div>
+
+      <!-- 6. Settings & Diagnostics -->
+      <div class="shot-card">
+        <div class="shot-img-wrap">
+          <a href="/screenshots/6_system_settings_diagnostics.png" target="_blank">
+            <img src="/screenshots/6_system_settings_diagnostics.png" alt="System Settings & Maintenance">
+          </a>
+        </div>
+        <div class="shot-content">
+          <div>
+            <div class="shot-title">6. System Diagnostics & Maintenance</div>
+            <div class="shot-desc">Operational controls for taxonomy verification, database health monitoring, and safe catalog reset without affecting core taxonomy.</div>
+          </div>
+          <a href="/screenshots/6_system_settings_diagnostics.png" download="6_system_settings_diagnostics.png" class="btn btn-secondary" style="width: 100%; justify-content: center;">
+            Download Screenshot
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+</body>
+</html>
