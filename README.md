@@ -21,18 +21,6 @@
 
 ![ShopTax Admin Overview Dashboard](docs/screenshots/admin_overview_dashboard_audit.png)
 
----
-
-### 📑 Quick Links & Deliverables
-
-| Deliverable | Description | Link |
-|---|---|:---:|
-| 🎥 **Interactive Demo Video** | Full HD Walkthrough with in-browser player & controls | [Open Video Player](http://localhost:5173/demo.html) |
-| 📥 **Direct Video Download** | 1920×924 HD video capture (1,327 frames, 15.28 MB) | [Download WebP](http://localhost:5173/shoptax_demo_walkthrough.webp) |
-| 📄 **Technical Assessment PDF** | Comprehensive 15-question architectural evaluation report | [Download PDF](http://localhost:5173/ShopTax_Product_Taxonomy_Technical_Evaluation.pdf) |
-| 🌐 **Evaluation Web Report** | Interactive web view with 1-click download & print buttons | [View Report](http://localhost:5173/evaluation.html) |
-| 📂 **GitHub Repository** | Source code & migrations repository | [GitHub Repo](https://github.com/josephjames5702/shoptax-product-classifier.git) |
-
 </div>
 
 ---
@@ -321,13 +309,11 @@ ollama run llama3.2:3b
 
 ## 🔐 Credentials & Access Matrix
 
-| Portal | URL | Default Credentials | Description |
+| Portal | Route | Default Credentials | Description |
 |---|---|---|---|
-| **Seller Portal** | `http://localhost:5173/app` | No login required | Upload CSV/Excel catalogs, view ingestion progress and product cards. |
-| **Admin Portal** | `http://localhost:5173/admin` | Username: `admin`<br/>Password: `admin123` | Executive KPI dashboard, category distribution, Review Queue, and Settings. |
-| **Interactive Demo Player** | `http://localhost:5173/demo.html` | Public | In-browser video player with 1-click video and screenshot downloads. |
-| **Technical Evaluation Report**| `http://localhost:5173/evaluation.html`| Public | 15-question technical assessment report with print/save as PDF support. |
-| **Django REST API** | `http://127.0.0.1:8000/api/` | JWT or Session | Standardized DRF endpoints. |
+| **Seller Portal** | `/app` | No login required | Upload CSV/Excel catalogs, view ingestion progress and product cards. |
+| **Admin Portal** | `/admin` | Username: `admin`<br/>Password: `admin123` | Executive KPI dashboard, category distribution, Review Queue, and Settings. |
+| **Django REST API** | `/api/` | JWT or Session | Standardized DRF endpoints. |
 
 ---
 
