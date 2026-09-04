@@ -19,7 +19,7 @@
 
 ---
 
-![ShopTax Executive Dashboard](docs/screenshots/4_admin_kpi_dashboard.png)
+![ShopTax Admin Overview Dashboard](docs/screenshots/admin_overview_dashboard_audit.png)
 
 ---
 
@@ -37,10 +37,38 @@
 
 ---
 
-## 📸 Platform Showcase & User Journey Screenshots
+## 📸 Platform Showcase & Real Application Screenshots
 
-### 1. Ingestion Lifecycle: From Uploading to Completed Classification
-> Real-time asynchronous processing tracks catalog feeds through their complete lifecycle. The system streams the file in chunks, executes the 3-stage AI funnel, and updates the catalog status from `PROCESSING` to `COMPLETED` with full audit trails.
+### 1. Admin Overview Dashboard & Infrastructure Audit Feed
+> Executive operations console featuring platform performance metrics (Total Products & Users: 100, Active Sessions: 57, Classified Catalogues: $45,210, Pending Reviews: 28), recent imported products with SKU/date tracking, and live infrastructure audit logs (AI Taxonomy Engine: Ollama Llama 3.2 online, System Backup completed).
+
+![Admin Overview Dashboard](docs/screenshots/admin_overview_dashboard_audit.png)
+
+---
+
+### 2. Admin Product Supervisor & Taxonomy Alignment Table
+> Detailed audit grid for supervisors to verify taxonomy breadcrumb paths, inspect individual prediction confidence percentages, and execute 1-click `Approve` or `Decline` decisions across all ingested product feeds.
+
+![Admin Product Supervisor Table](docs/screenshots/admin_product_supervisor_table.png)
+
+---
+
+### 3. Seller Products Explorer: Visual Cards & Status Filtering
+> Sellers can explore their categorized catalog items through a responsive visual card grid. Each card displays the product thumbnail, SKU, predicted Shopify category, confidence score, and decision badge (`NEEDS REVIEW` or `DECLINED`).
+
+![Seller Products Explorer Grid](docs/screenshots/seller_products_explorer_grid.png)
+
+#### Multi-State Granular Status Filtering
+> Products can be filtered across all operational lifecycle states: *Approved (All)*, *Automatically Approved*, *Admin Approved*, *Needs Review*, *Pending*, or *Declined*.
+
+| Multi-State Filter Dropdown | Filtered Products View ("Declined" Items) |
+|:---:|:---:|
+| <img src="docs/screenshots/status_filter_dropdown.png" width="380" alt="Status Dropdown"/> | <img src="docs/screenshots/seller_products_declined_filter.png" width="480" alt="Declined Filter View"/> |
+
+---
+
+### 4. Ingestion Lifecycle: From Uploading to Completed Classification
+> Asynchronous processing tracks catalog feeds through their complete lifecycle. The system streams the file in chunks, executes the 3-stage AI funnel, and updates the catalog status from `PROCESSING` to `COMPLETED` with full database checkpoints.
 
 | Live Ingestion & Processing (`PROCESSING`) | Final Verified Catalog (`COMPLETED`) |
 |:---:|:---:|
@@ -48,14 +76,14 @@
 
 ---
 
-### 2. Multi-Catalogue Management (`/app`)
+### 5. Multi-Catalogue Management (`/app`)
 > Sellers can import multiple product catalogs simultaneously (CSV/XLSX), view live record counts, explore classifications, or remove outdated catalogs with in-app confirmation modals.
 
 ![Multiple Catalogues Management](docs/screenshots/seller_portal_multiple_catalogues.png)
 
 ---
 
-### 3. Dual-Portal Authentication Experience
+### 6. Dual-Portal Authentication Experience
 > Dedicated, branded login experiences for merchants and administrators:
 
 | Seller Portal Login (Glassmorphism & Lifestyle) | Admin Portal Login (Polaris Clean SaaS) |
@@ -64,28 +92,21 @@
 
 ---
 
-### 4. Executive SaaS KPI Dashboard (`/admin`)
-> Real-time executive monitoring showing total catalogues, total products, auto-approved rate (80%+ threshold), active items in the human review queue, and a category distribution breakdown chart.
-
-![Admin KPI Dashboard](docs/screenshots/4_admin_kpi_dashboard.png)
-
----
-
-### 5. Human-in-the-Loop (HITL) Review Queue (`/admin?tab=review`)
+### 7. Human-in-the-Loop (HITL) Review Queue (`/admin?tab=review`)
 > Triage console for ambiguous products (confidence < 80%). Displays top-4 ranked candidate categories with individual confidence percentages and 1-click supervisor approvals or overrides.
 
 ![Human-in-the-Loop Review Queue](docs/screenshots/5_admin_review_queue_hitl.png)
 
 ---
 
-### 6. Taxonomy Breadcrumb & Attribute Inspector
+### 8. Taxonomy Breadcrumb & Attribute Inspector
 > Deep product inspection view showing the full hierarchical path in the official Shopify taxonomy (`Furniture > Chairs > Kitchen & Dining Room Chairs`), multi-signal confidence score, and extracted normalized attributes (Color, Material, Pattern).
 
 ![Product Classification Detail](docs/screenshots/2_product_classification_detail.png)
 
 ---
 
-### 7. System Diagnostics & Safe Maintenance (`/admin?tab=settings`)
+### 9. System Diagnostics & Safe Maintenance (`/admin?tab=settings`)
 > System health checks, taxonomy data integrity tools, and safe catalog reset functionality that deletes user catalog test data while strictly preserving core Shopify taxonomy records.
 
 ![System Diagnostics & Settings](docs/screenshots/6_system_settings_diagnostics.png)
