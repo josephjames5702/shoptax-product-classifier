@@ -324,9 +324,9 @@ ollama run llama3.2:3b
 
 | Portal | Route | Default Credentials | Description |
 |---|---|---|---|
-| **Seller Portal** | `/app` | No login required | Upload CSV/Excel catalogs, view ingestion progress and product cards. |
-| **Admin Portal** | `/admin` | Username: `admin`<br/>Password: `admin123` | Executive KPI dashboard, category distribution, Review Queue, and Settings. |
-| **Django REST API** | `/api/` | JWT or Session | Standardized DRF endpoints. |
+| **Seller Portal** | `/app` | Email: `user_a@test.com`<br/>Password: `UserPass123!` (or `password123`)<br/>*(Autofill button included)* | Upload CSV/Excel catalogs, view ingestion progress, product cards, and category mappings. |
+| **Admin Portal** | `/admin` | Username: `admin`<br/>Password: `Admin123!` (or `admin123`)<br/>*(Autofill button included)* | Executive KPI dashboard, category distribution, HITL Review Queue, and Settings. |
+| **Django REST API** | `/api/` | Session or Basic Auth | Standardized DRF endpoints with CSRF-exempt session authentication. |
 
 ---
 
