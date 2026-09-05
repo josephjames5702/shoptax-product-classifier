@@ -184,7 +184,7 @@ class CatalogViewSet(viewsets.ModelViewSet):
                 from services.pipeline_runner import PipelineRunner
                 cat_instance = Catalog.objects.get(id=catalog_id_str)
                 job_instance = ProcessingJob.objects.get(id=job_id_str)
-                runner = PipelineRunner(cat_instance, job_instance, batch_size=25)
+                runner = PipelineRunner(cat_instance, job_instance, batch_size=100)
                 runner.run(retry_failed_only=retry_failed_only)
             except Exception as e:
                 logger.exception(f"Background classification failed: {e}")
@@ -299,24 +299,25 @@ class CatalogViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['get'], url_path='progress')
     def get_progress(self, request, pk=None):
         catalog = self.get_object()
-        total = catalog.products.count()
-        completed = catalog.products.filter(
-            processing_status__in=[
-                Product.ProcessingStatus.AUTO_APPROVED,
-                Product.ProcessingStatus.CLASSIFIED,
-                Product.ProcessingStatus.COMPLETED,
-            ]
-        ).count()
-        failed = catalog.products.filter(processing_status=Product.ProcessingStatus.FAILED).count()
-        manual_review = catalog.products.filter(
-            processing_status__in=[
-                Product.ProcessingStatus.REQUIRES_REVIEW,
-                Product.ProcessingStatus.MANUAL_REVIEW,
-            ]
-        ).count()
-        pending = catalog.products.filter(processing_status=Product.ProcessingStatus.PENDING).count()
-        processing = catalog.products.filter(processing_status=Product.ProcessingStatus.PROCESSING).count()
-        retrying = catalog.products.filter(processing_status=Product.ProcessingStatus.RETRYING).count()
+        from django.db.models import Count
+        status_counts = {
+            item['processing_status']: item['count']
+            for item in catalog.products.values('processing_status').annotate(count=Count('id'))
+        }
+        completed = (
+            status_counts.get(Product.ProcessingStatus.AUTO_APPROVED, 0) +
+            status_counts.get(Product.ProcessingStatus.CLASSIFIED, 0) +
+            status_counts.get(Product.ProcessingStatus.COMPLETED, 0)
+        )
+        failed = status_counts.get(Product.ProcessingStatus.FAILED, 0)
+        manual_review = (
+            status_counts.get(Product.ProcessingStatus.REQUIRES_REVIEW, 0) +
+            status_counts.get(Product.ProcessingStatus.MANUAL_REVIEW, 0)
+        )
+        pending = status_counts.get(Product.ProcessingStatus.PENDING, 0)
+        processing = status_counts.get(Product.ProcessingStatus.PROCESSING, 0)
+        retrying = status_counts.get(Product.ProcessingStatus.RETRYING, 0)
+        total = sum(status_counts.values()) or catalog.total_products
 
         latest_job = catalog.processing_jobs.order_by('-created_at').first()
 
@@ -343,24 +344,25 @@ class CatalogViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['get'], url_path='all-progress')
     def get_all_progress(self, request):
-        total = Product.objects.count()
-        completed = Product.objects.filter(
-            processing_status__in=[
-                Product.ProcessingStatus.AUTO_APPROVED,
-                Product.ProcessingStatus.CLASSIFIED,
-                Product.ProcessingStatus.COMPLETED,
-            ]
-        ).count()
-        failed = Product.objects.filter(processing_status=Product.ProcessingStatus.FAILED).count()
-        manual_review = Product.objects.filter(
-            processing_status__in=[
-                Product.ProcessingStatus.REQUIRES_REVIEW,
-                Product.ProcessingStatus.MANUAL_REVIEW,
-            ]
-        ).count()
-        pending = Product.objects.filter(processing_status=Product.ProcessingStatus.PENDING).count()
-        processing = Product.objects.filter(processing_status=Product.ProcessingStatus.PROCESSING).count()
-        retrying = Product.objects.filter(processing_status=Product.ProcessingStatus.RETRYING).count()
+        from django.db.models import Count
+        status_counts = {
+            item['processing_status']: item['count']
+            for item in Product.objects.values('processing_status').annotate(count=Count('id'))
+        }
+        completed = (
+            status_counts.get(Product.ProcessingStatus.AUTO_APPROVED, 0) +
+            status_counts.get(Product.ProcessingStatus.CLASSIFIED, 0) +
+            status_counts.get(Product.ProcessingStatus.COMPLETED, 0)
+        )
+        failed = status_counts.get(Product.ProcessingStatus.FAILED, 0)
+        manual_review = (
+            status_counts.get(Product.ProcessingStatus.REQUIRES_REVIEW, 0) +
+            status_counts.get(Product.ProcessingStatus.MANUAL_REVIEW, 0)
+        )
+        pending = status_counts.get(Product.ProcessingStatus.PENDING, 0)
+        processing = status_counts.get(Product.ProcessingStatus.PROCESSING, 0)
+        retrying = status_counts.get(Product.ProcessingStatus.RETRYING, 0)
+        total = sum(status_counts.values())
 
         pct = (completed + failed + manual_review) / total * 100.0 if total > 0 else 0.0
 

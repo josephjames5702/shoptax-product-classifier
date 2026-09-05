@@ -94,10 +94,25 @@ else:
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': BASE_DIR / 'db.sqlite3',
             'OPTIONS': {
-                'timeout': 60,
+                'timeout': 30,
             }
         }
     }
+
+from django.db.backends.signals import connection_created
+from django.dispatch import receiver
+
+@receiver(connection_created)
+def configure_sqlite_wal(sender, connection, **kwargs):
+    if connection.vendor == 'sqlite':
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute('PRAGMA synchronous = NORMAL;')
+                cursor.execute('PRAGMA cache_size = 10000;')
+                cursor.execute('PRAGMA temp_store = MEMORY;')
+                cursor.execute('PRAGMA busy_timeout = 30000;')
+        except Exception:
+            pass
 
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},

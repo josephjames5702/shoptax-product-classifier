@@ -65,14 +65,11 @@ class RetrievalService:
         and dense sentence-embedding matrix once per active taxonomy version.
         NEVER recomputed per product.
         """
-        current_cat_count = TaxonomyCategory.objects.filter(taxonomy_version=active_version).count()
         if (
             self._cached_version is not None and
             self._cached_version.id == active_version.id and
-            self._category_docs is not None and
-            len(self._category_docs) == current_cat_count and
-            current_cat_count > 0 and
-            TaxonomyCategory.objects.filter(id=self._category_docs[0]['category_id'], taxonomy_version=active_version).exists()
+            self._category_docs and
+            self._embedding_matrix is not None
         ):
             return
 

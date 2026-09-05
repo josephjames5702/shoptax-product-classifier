@@ -125,18 +125,29 @@ JSON Schema:
             logger.error(f"Ollama returned malformed JSON: {e}")
             raise ValueError(f"Malformed JSON from Ollama: {e}")
 
+    _ollama_availability_cache: Optional[bool] = None
+    _ollama_cache_timestamp: float = 0.0
+
     def _check_ollama_available(self) -> bool:
         if not self.model:
             return False
+        import time
+        now = time.time()
+        if self._ollama_availability_cache is not None and (now - self._ollama_cache_timestamp) < 30.0:
+            return self._ollama_availability_cache
         try:
-            with httpx.Client(timeout=2.0) as client:
+            with httpx.Client(timeout=1.0) as client:
                 resp = client.get("http://localhost:11434/api/tags")
                 if resp.status_code == 200:
                     models = [m['name'] for m in resp.json().get('models', [])]
-                    # basic substring match to handle tag variants
-                    return any(self.model in m for m in models)
+                    is_avail = any(self.model in m for m in models)
+                    self._ollama_availability_cache = is_avail
+                    self._ollama_cache_timestamp = now
+                    return is_avail
         except Exception:
             pass
+        self._ollama_availability_cache = False
+        self._ollama_cache_timestamp = now
         return False
 
     def _call_ollama(self, prompt: str) -> Dict[str, Any]:

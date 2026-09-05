@@ -33,9 +33,14 @@ class SentenceEmbeddingEngine:
         try:
             import torch
             torch.set_num_threads(os.cpu_count() or 4)
+            os.environ.setdefault('HF_HUB_OFFLINE', '1')
+            os.environ.setdefault('TRANSFORMERS_OFFLINE', '1')
             from sentence_transformers import SentenceTransformer
             logger.info(f"Loading SentenceTransformer model '{self.model_name}'...")
-            self._st_model = SentenceTransformer(self.model_name)
+            try:
+                self._st_model = SentenceTransformer(self.model_name, local_files_only=True)
+            except Exception:
+                self._st_model = SentenceTransformer(self.model_name)
             logger.info("SentenceTransformer model loaded successfully.")
         except Exception as e:
             logger.error(f"Failed to load SentenceTransformer ({e}). Genuine semantic retrieval requires this model.")

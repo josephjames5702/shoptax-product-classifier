@@ -110,11 +110,12 @@ export const AppContent: React.FC = () => {
   useEffect(() => {
     if (user) {
       loadData();
-      // Concurrent real-time sync polling every 3.5s
-      const interval = setInterval(loadData, 3500);
+      const hasProcessing = catalogs.some((c) => c.status === 'PROCESSING');
+      const pollDelay = hasProcessing ? 1200 : 4000;
+      const interval = setInterval(loadData, pollDelay);
       return () => clearInterval(interval);
     }
-  }, [user]);
+  }, [user, catalogs.map((c) => c.status).join(',')]);
 
   if (isLoading) {
     return (
