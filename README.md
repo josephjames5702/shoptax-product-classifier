@@ -19,24 +19,77 @@
 
 ---
 
-![ShopTax Admin Overview Dashboard](docs/screenshots/admin_overview_dashboard_audit.png)
+![ShopTax Hero Showcase](docs/screenshots/admin_overview_dashboard_audit.png)
 
 </div>
 
 ---
 
-## 📸 Platform Showcase & Real Application Screenshots
+## 🔐 Credentials & Quick Access Matrix
 
-### 1. Ingestion Lifecycle: Uploading, Batch Processing, and Completion
-> The complete lifecycle of an uploaded catalogue feed. Merchants select a CSV or Excel file via the drag-and-drop modal. The system parses rows in streaming chunks, shows real-time progress during `PROCESSING`, and finalizes with verified `COMPLETED` classifications.
+Before exploring the platform, evaluate the system using these pre-configured user credentials or use the built-in **Autofill** buttons on either login screen:
 
-| Step 1: Upload Modal | Step 2: Live Processing (`PROCESSING`) | Step 3: Verified Catalog (`COMPLETED`) |
+| Portal | Route | Default Credentials | Description & Capabilities |
+|---|---|---|---|
+| **Seller Portal** | `/app` | Email: `user_a@test.com`<br/>Password: `UserPass123!` *(or `password123`)* | Upload CSV/Excel catalogs, track real-time parsing progress, inspect product cards, and filter classification states. |
+| **Admin Portal** | `/admin` | Username: `admin`<br/>Password: `Admin123!` *(or `admin123`)* | Executive KPI dashboard, analytics telemetry, Human-in-the-Loop (HITL) Review Queue, and AI Engine threshold configuration. |
+| **Django REST API** | `/api/` | Session or Basic Auth | Full programmatic REST API endpoints for catalog uploads, batch classification, and real-time progress polling. |
+
+---
+
+## 📸 Platform Showcase & User Journey
+
+The workflow below illustrates the complete product journey through ShopTax, starting from user authentication to ingestion, visual exploration, executive oversight, and human-in-the-loop review.
+
+### 1. Dual-Portal Authentication & Access Gateways
+> Every interaction begins at dedicated authentication portals designed specifically for the two platform personas:
+> * **Seller Portal (`/app`):** Features a modern glassmorphism aesthetic with high-resolution e-commerce lifestyle imagery and 1-click test credentials for merchant convenience.
+> * **Admin Portal (`/admin`):** Features an executive clean SaaS layout with vibrant gradient accents, security notices, and role-based access validation.
+
+| Seller Portal Login (Glassmorphism & Lifestyle) | Admin Portal Login (Clean SaaS & Executive) |
+|:---:|:---:|
+| ![Seller Glassmorphism Login](docs/screenshots/seller_portal_glassmorphism_login.png) | ![Admin SaaS Login](docs/screenshots/admin_portal_login_gradient.png) |
+
+---
+
+### 2. Ingestion Lifecycle: Uploading, Streaming Parse & Verification
+> The end-to-end ingestion lifecycle for merchant catalogue feeds. Merchants upload a CSV or Excel file via the drag-and-drop modal. The system processes rows in streaming chunks, shows real-time progress during `PROCESSING`, and finalizes with verified `COMPLETED` classifications.
+
+| Step 1: Upload Modal Dialog | Step 2: Live Ingestion State (`PROCESSING`) | Step 3: Verified Catalogue (`COMPLETED`) |
 |:---:|:---:|:---:|
 | <img src="docs/screenshots/upload_catalogue_modal_dialog.png" width="280" alt="Upload Modal"/> | <img src="docs/screenshots/seller_portal_catalogues_processing.png" width="360" alt="Processing State"/> | <img src="docs/screenshots/seller_portal_my_catalogues_completed.png" width="360" alt="Completed State"/> |
 
 ---
 
-### 2. Classification Analytics & Global Performance Insights (`/admin?tab=analytics`)
+### 3. Seller Products Explorer: Visual Cards & Status Filtering (`/app`)
+> Sellers can explore their categorized catalog items through a responsive visual card grid. Each card displays the product thumbnail, SKU, predicted Shopify category, confidence score, and decision badge (`NEEDS REVIEW` or `DECLINED`).
+
+![Seller Products Explorer Grid](docs/screenshots/seller_products_explorer_grid.png)
+
+#### Multi-State Granular Status Filtering
+> Products can be filtered dynamically across all operational lifecycle states: *Approved (All)*, *Automatically Approved*, *Admin Approved*, *Needs Review*, *Pending*, or *Declined*.
+
+| Multi-State Filter Dropdown | Filtered Products View ("Declined" Items) |
+|:---:|:---:|
+| <img src="docs/screenshots/status_filter_dropdown.png" width="380" alt="Status Dropdown"/> | <img src="docs/screenshots/seller_products_declined_filter.png" width="480" alt="Declined Filter View"/> |
+
+---
+
+### 4. Multi-Catalogue Management (`/app`)
+> Sellers can manage multiple product catalogs simultaneously (CSV/XLSX), view live item counts, examine classifications, or remove outdated catalogs with in-app confirmation modals.
+
+![Multiple Catalogues Management](docs/screenshots/seller_portal_multiple_catalogues.png)
+
+---
+
+### 5. Admin Overview Dashboard & Infrastructure Audit Feed (`/admin`)
+> Executive operations console featuring platform performance metrics (Total Products & Users: 100, Active Sessions: 57, Classified Catalogues: $45,210, Pending Reviews: 28), recent imported products with SKU/date tracking, and live infrastructure audit logs (AI Taxonomy Engine: Ollama Llama 3.2 online, System Backup completed).
+
+![Admin Overview Dashboard](docs/screenshots/admin_overview_dashboard_audit.png)
+
+---
+
+### 6. Classification Analytics & Global Performance Insights (`/admin?tab=analytics`)
 > Global telemetry tracking classification precision, confidence distribution, and review queue throughput:
 > * **94.2% AI Classification Accuracy** across all mapped categories.
 > * **Confidence Score Distribution:** 65% High Confidence (>70%), 28% Medium Confidence (40–70%), 7% Low Confidence (<40%).
@@ -46,71 +99,34 @@
 
 ---
 
-### 3. Admin Overview Dashboard & Infrastructure Audit Feed (`/admin`)
-> Executive operations console featuring platform performance metrics (Total Products & Users: 100, Active Sessions: 57, Classified Catalogues: $45,210, Pending Reviews: 28), recent imported products with SKU/date tracking, and live infrastructure audit logs (AI Taxonomy Engine: Ollama Llama 3.2 online, System Backup completed).
-
-![Admin Overview Dashboard](docs/screenshots/admin_overview_dashboard_audit.png)
-
----
-
-### 4. Admin Product Supervisor & Taxonomy Alignment Table
+### 7. Admin Product Supervisor & Taxonomy Alignment Table
 > Detailed audit grid for supervisors to verify taxonomy breadcrumb paths, inspect individual prediction confidence percentages, and execute 1-click `Approve` or `Decline` decisions across all ingested product feeds.
 
 ![Admin Product Supervisor Table](docs/screenshots/admin_product_supervisor_table.png)
 
 ---
 
-### 5. Seller Products Explorer: Visual Cards & Status Filtering (`/app`)
-> Sellers can explore their categorized catalog items through a responsive visual card grid. Each card displays the product thumbnail, SKU, predicted Shopify category, confidence score, and decision badge (`NEEDS REVIEW` or `DECLINED`).
-
-![Seller Products Explorer Grid](docs/screenshots/seller_products_explorer_grid.png)
-
-#### Multi-State Granular Status Filtering
-> Products can be filtered across all operational lifecycle states: *Approved (All)*, *Automatically Approved*, *Admin Approved*, *Needs Review*, *Pending*, or *Declined*.
-
-| Multi-State Filter Dropdown | Filtered Products View ("Declined" Items) |
-|:---:|:---:|
-| <img src="docs/screenshots/status_filter_dropdown.png" width="380" alt="Status Dropdown"/> | <img src="docs/screenshots/seller_products_declined_filter.png" width="480" alt="Declined Filter View"/> |
-
----
-
-### 6. AI Engine Configuration & Threshold Management (`/admin?tab=settings`)
-> Real-time settings allowing administrators to manage AI classification engine parameters without restarting the application:
-> * **Classification Model Provider:** Local Offline Ollama (Llama 3.2 3B) with verified endpoint connection.
-> * **Auto-Approval Threshold Slider:** Configurable cutoff (default 80%) for promoting high-confidence predictions directly into inventory.
-> * **Batch Processing Size:** Tunable worker queue chunk sizes (default 50 items per Celery task).
-
-![AI Classification Engine Settings](docs/screenshots/admin_system_settings_engine.png)
-
----
-
-### 7. Multi-Catalogue Management (`/app`)
-> Sellers can import multiple product catalogs simultaneously (CSV/XLSX), view live record counts, explore classifications, or remove outdated catalogs with in-app confirmation modals.
-
-![Multiple Catalogues Management](docs/screenshots/seller_portal_multiple_catalogues.png)
-
----
-
-### 8. Dual-Portal Authentication Experience
-> Dedicated, branded login experiences for merchants and administrators:
-
-| Seller Portal Login (Glassmorphism & Lifestyle) | Admin Portal Login (Polaris Clean SaaS) |
-|:---:|:---:|
-| ![Seller Glassmorphism Login](docs/screenshots/seller_portal_glassmorphism_login.png) | ![Admin SaaS Login](docs/screenshots/admin_portal_login_gradient.png) |
-
----
-
-### 9. Human-in-the-Loop (HITL) Review Queue (`/admin?tab=review`)
+### 8. Human-in-the-Loop (HITL) Review Queue (`/admin?tab=review`)
 > Triage console for ambiguous products (confidence < 80%). Displays top-4 ranked candidate categories with individual confidence percentages and 1-click supervisor approvals or overrides.
 
 ![Human-in-the-Loop Review Queue](docs/screenshots/5_admin_review_queue_hitl.png)
 
 ---
 
-### 10. Taxonomy Breadcrumb & Attribute Inspector
+### 9. Taxonomy Breadcrumb & Attribute Inspector
 > Deep product inspection view showing the full hierarchical path in the official Shopify taxonomy (`Furniture > Chairs > Kitchen & Dining Room Chairs`), multi-signal confidence score, and extracted normalized attributes (Color, Material, Pattern).
 
 ![Product Classification Detail](docs/screenshots/2_product_classification_detail.png)
+
+---
+
+### 10. AI Engine Configuration & Threshold Management (`/admin?tab=settings`)
+> Real-time settings allowing administrators to manage AI classification engine parameters without restarting the application:
+> * **Classification Model Provider:** Local Offline Ollama (Llama 3.2 3B) with verified endpoint connection.
+> * **Auto-Approval Threshold Slider:** Configurable cutoff (default 80%) for promoting high-confidence predictions directly into inventory.
+> * **Batch Processing Size:** Tunable worker queue chunk sizes (default 50 items per Celery task).
+
+![AI Classification Engine Settings](docs/screenshots/admin_system_settings_engine.png)
 
 ---
 
@@ -320,16 +336,6 @@ ollama run llama3.2:3b
 
 ---
 
-## 🔐 Credentials & Access Matrix
-
-| Portal | Route | Default Credentials | Description |
-|---|---|---|---|
-| **Seller Portal** | `/app` | Email: `user_a@test.com`<br/>Password: `UserPass123!` (or `password123`)<br/>*(Autofill button included)* | Upload CSV/Excel catalogs, view ingestion progress, product cards, and category mappings. |
-| **Admin Portal** | `/admin` | Username: `admin`<br/>Password: `Admin123!` (or `admin123`)<br/>*(Autofill button included)* | Executive KPI dashboard, category distribution, HITL Review Queue, and Settings. |
-| **Django REST API** | `/api/` | Session or Basic Auth | Standardized DRF endpoints with CSRF-exempt session authentication. |
-
----
-
 ## 📡 API Reference
 
 | Method | Endpoint | Description |
@@ -354,7 +360,7 @@ To sync your local changes to GitHub:
 git add .
 
 # Commit with descriptive message
-git commit -m "docs: add real user screenshots, ingestion lifecycle states, and updated UI badges"
+git commit -m "docs: reorder README showcase starting with login portals and user journey"
 
 # Push to main branch
 git push origin main
